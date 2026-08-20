@@ -1,0 +1,124 @@
+<!-- pages/mine/mine.wxml - 我的页：设置 -->
+<view class="page">
+  <!-- 未绑定：只显示绑定引导，不暴露任何信息 -->
+  <block wx:if="{{!bound}}">
+    <view class="card">
+      <view class="card-title">设备绑定</view>
+      <view class="info-row">
+        <text class="info-label">绑定状态</text>
+        <text class="info-value bound-no">未绑定</text>
+      </view>
+      <view class="owner-tip">绑定后即可查看车辆状态、行程与数据</view>
+      <view class="bind-actions">
+        <button class="bind-btn" bindtap="goBind">口令登录</button>
+      </view>
+    </view>
+  </block>
+
+  <!-- 已绑定：完整信息 -->
+  <block wx:else>
+  <!-- 用户/车辆信息 -->
+  <view class="profile-card">
+    <view class="avatar">T</view>
+    <view class="profile-info">
+      <view class="profile-name">{{vehicle.nickname}}</view>
+      <view class="profile-sub">{{vehicle.name}} · 个人车主</view>
+    </view>
+  </view>
+
+  <!-- 绑定状态 -->
+  <view class="card">
+    <view class="card-title">设备绑定</view>
+    <view class="info-row">
+      <text class="info-label">绑定状态</text>
+      <text class="info-value bound-ok">已绑定</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">我的角色</text>
+      <text class="info-value">{{isOwner ? '车主' : '成员'}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">我的 ID</text>
+      <text class="info-value">{{openid}}</text>
+    </view>
+
+    <!-- 用户管理入口 -->
+    <view class="owner-divider"></view>
+    <view class="manage-entry" bindtap="goUsers">
+      <view class="manage-left">
+        <text class="manage-title">用户管理</text>
+        <text class="manage-sub">已绑定 {{members.length}} 个用户 · 移除/解绑</text>
+      </view>
+      <text class="manage-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 功能设置 -->
+  <view class="card">
+    <view class="card-title">功能设置</view>
+    <view class="switch-row">
+      <view class="switch-label-wrap">
+        <text class="switch-label">行程推送提醒</text>
+        <text class="switch-desc">行程/充电完成时通知</text>
+      </view>
+      <switch checked="{{pushEnabled}}" bindchange="onPushChange" color="#E82127" />
+    </view>
+    <view class="switch-row">
+      <view class="switch-label-wrap">
+        <text class="switch-label">实时车辆状态</text>
+        <text class="switch-desc">首页自动刷新状态</text>
+      </view>
+      <switch checked="{{statusEnabled}}" bindchange="onStatusChange" color="#E82127" />
+    </view>
+    <view class="switch-row">
+      <view class="switch-label-wrap">
+        <text class="switch-label">解锁二次确认</text>
+        <text class="switch-desc">解锁前弹窗确认</text>
+      </view>
+      <switch checked="{{lockWarnEnabled}}" bindchange="onLockWarnChange" color="#E82127" />
+    </view>
+  </view>
+
+  <!-- 车辆信息 -->
+  <view class="card">
+    <view class="card-title">车辆信息</view>
+    <view class="info-row">
+      <text class="info-label">车型</text>
+      <text class="info-value">{{vehicle.name}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">电池容量</text>
+      <text class="info-value">{{vehicle.capacityText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">能耗系数</text>
+      <text class="info-value">{{vehicle.efficiencyText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">总里程</text>
+      <text class="info-value">{{vehicle.odoText}}</text>
+    </view>
+  </view>
+
+  <!-- 数据源 -->
+  <view class="card">
+    <view class="card-title">数据源</view>
+    <view class="info-row">
+      <text class="info-label">来源</text>
+      <text class="info-value">TeslaMate (PostgreSQL)</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">数据更新</text>
+      <text class="info-value">{{lastUpdateText}}</text>
+    </view>
+  </view>
+
+  <!-- 关于 -->
+  <view class="card">
+    <view class="info-row">
+      <text class="info-label">版本</text>
+      <text class="info-value">v0.3.0-demo</text>
+    </view>
+  </view>
+  </block>
+</view>

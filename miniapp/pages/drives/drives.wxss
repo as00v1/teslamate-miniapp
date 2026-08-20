@@ -1,0 +1,214 @@
+/* pages/drives/drives.wxss - 行程页样式 */
+.page {
+  padding-bottom: 40rpx;
+}
+
+/* 统计网格 2x2 */
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 8rpx 24rpx 0;
+}
+
+.stat-item {
+  box-sizing: border-box;
+  width: calc(50% - 10rpx);
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.stat-value {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #8A8A8A;
+  margin-top: 8rpx;
+}
+
+/* 行程列表（卡片内紧凑版） */
+.drive-item {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F2F2F2;
+}
+
+.drive-item:last-child {
+  border-bottom: none;
+}
+
+.drive-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14rpx;
+}
+
+.drive-date {
+  font-size: 24rpx;
+  color: #8A8A8A;
+}
+
+.drive-distance {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #E82127;
+}
+
+.drive-mid {
+  display: flex;
+  background: #F7F7F7;
+  border-radius: 12rpx;
+  padding: 14rpx 0;
+}
+
+.drive-metric {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-label {
+  font-size: 20rpx;
+  color: #B4B4B4;
+}
+
+.m-value {
+  font-size: 26rpx;
+  color: #1A1A1A;
+  margin-top: 4rpx;
+  font-weight: 500;
+}
+
+.drive-route {
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #8A8A8A;
+}
+
+/* 旅程/充电 tab */
+.tabs {
+  display: flex;
+  margin: 8rpx 24rpx 0;
+  background: #EEEEEE;
+  border-radius: 12rpx;
+  padding: 6rpx;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 14rpx 0;
+  font-size: 28rpx;
+  color: #8A8A8A;
+  border-radius: 10rpx;
+  transition: all 0.2s ease;
+}
+
+.tab-item.active {
+  background: #FFFFFF;
+  color: #E82127;
+  font-weight: 600;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+}
+
+/* 充电明细 */
+.charge-item {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F2F2F2;
+}
+
+.charge-item:last-child {
+  border-bottom: none;
+}
+
+.charge-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14rpx;
+}
+
+.charge-date {
+  font-size: 24rpx;
+  color: #8A8A8A;
+}
+
+.charge-tag {
+  font-size: 20rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.tag-home {
+  background: #FBEAF0;
+  color: #993556;
+}
+
+.tag-fast {
+  background: #FCEBEB;
+  color: #A32D2D;
+}
+
+.charge-mid {
+  display: flex;
+  background: #F7F7F7;
+  border-radius: 12rpx;
+  padding: 14rpx 0;
+}
+
+.charge-metric {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.charge-metric.main {
+  flex: 1.3;
+}
+
+.cvalue {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #1A1A1A;
+}
+
+.charge-metric.main .cvalue {
+  font-size: 30rpx;
+  color: #E82127;
+  font-weight: 600;
+}
+
+.clabel {
+  font-size: 20rpx;
+  color: #B4B4B4;
+  margin-top: 4rpx;
+}
+
+.charge-foot {
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #8A8A8A;
+}
+
+.item-hover {
+  opacity: 0.7;
+}
+
+.load-more {
+  text-align: center;
+  padding: 24rpx 0;
+}
+
+.load-text {
+  font-size: 22rpx;
+  color: #B4B4B4;
+}

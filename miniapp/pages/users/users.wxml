@@ -1,0 +1,41 @@
+<!-- pages/users/users.wxml - 用户管理页 -->
+<view class="page">
+  <!-- 当前用户信息 -->
+  <view class="me-card">
+    <view class="me-avatar">{{isOwner ? '👑' : '👤'}}</view>
+    <view class="me-info">
+      <view class="me-name">{{isOwner ? '车主' : '成员'}}</view>
+      <view class="me-id">{{openid}}</view>
+    </view>
+    <view class="me-badge">{{isOwner ? '车主' : '成员'}}</view>
+  </view>
+
+  <!-- 成员列表 -->
+  <view class="card">
+    <view class="card-title">已绑定用户（{{members.length}}）</view>
+    <view class="member-item" wx:for="{{members}}" wx:key="openid">
+      <view class="member-left">
+        <view class="member-name-row">
+          <text class="member-name">{{item.is_owner ? '👑 ' : ''}}{{item.nickname}}</text>
+          <text class="member-role" wx:if="{{item.is_owner}}">车主</text>
+        </view>
+        <text class="member-id">{{item.openid}}</text>
+        <text class="member-time">绑定于 {{item.boundTimeText}}</text>
+      </view>
+      <view class="member-right">
+        <text class="member-self" wx:if="{{item.openid === openid}}">当前账号</text>
+        <text class="member-remove" wx:elif="{{isOwner}}" bindtap="doRemoveMember" data-openid="{{item.openid}}">移除</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 当前账号操作 -->
+  <view class="card">
+    <view class="card-title">当前账号</view>
+    <view class="action-row" bindtap="doUnbind">
+      <text class="action-label">解绑当前账号</text>
+      <text class="action-arrow">›</text>
+    </view>
+    <view class="action-tip">解绑后将无法查看车辆数据，需重新输入口令登录</view>
+  </view>
+</view>

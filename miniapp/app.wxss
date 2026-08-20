@@ -1,0 +1,37 @@
+/* app.wxss - 全局样式（Tesla 红黑低饱和主题） */
+page {
+  background: #F7F7F7;
+  color: #1A1A1A;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin: 20rpx 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin-bottom: 20rpx;
+}
+
+.section-gap {
+  height: 20rpx;
+}
+
+/* 骨架屏闪烁 */
+@keyframes skeleton-blink {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+.skeleton {
+  animation: skeleton-blink 1.2s ease-in-out infinite;
+}

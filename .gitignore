@@ -1,0 +1,40 @@
+# ========== 敏感配置（含真实域名/密钥/口令，严禁提交）==========
+# 前端本地配置：真实 API 域名（config.example.js 是模板可提交）
+miniapp/config.js
+
+# 后端环境变量
+server/.env
+.env
+
+# 证书与密钥
+*.pem
+*.key
+*.crt
+
+# 备份与凭证（阿里云 AccessKey / 服务器密码等，最高保密）
+backup-credentials*
+*.dump
+*.tgz
+*.tar.gz
+
+# ========== 微信开发者工具 ==========
+# 本地私有配置（含个人 AppID/项目路径，各人机器不同）
+project.private.config.json
+miniapp/project.private.config.json
+
+# ⚠️ 根目录 project.config.json 是误生成的小游戏配置（compileType:game + 小游戏测试号）
+# 正确配置在 miniapp/project.config.json（小程序），故根目录这份不提交
+/project.config.json
+
+# ========== 依赖与构建 ==========
+node_modules/
+miniprogram_npm/
+__pycache__/
+*.pyc
+
+# ========== 系统与编辑器 ==========
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

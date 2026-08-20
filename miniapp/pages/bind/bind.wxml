@@ -1,0 +1,28 @@
+<!-- pages/bind/bind.wxml - 口令登录页 -->
+<view class="bind-page">
+  <view class="bind-lock">🔑</view>
+  <view class="bind-title">口令登录</view>
+  <view class="bind-desc">请输入口令完成登录，登录后即可查看车辆数据</view>
+
+  <view class="bind-input-wrap">
+    <input
+      class="bind-input"
+      password="{{!showPass}}"
+      placeholder="请输入口令"
+      placeholder-class="bind-placeholder"
+      value="{{passphrase}}"
+      bindinput="onInput"
+    />
+    <view class="bind-eye" bindtap="toggleShow">
+      {{showPass ? '隐藏' : '显示'}}
+    </view>
+  </view>
+
+  <view class="bind-tip" wx:if="{{errorText}}">{{errorText}}</view>
+
+  <button class="bind-btn" bindtap="doLogin" disabled="{{!canSubmit || submitting}}">
+    {{submitting ? '登录中...' : '登录并绑定'}}
+  </button>
+
+  <view class="bind-help">口令由车主设置，登录后将与您的微信绑定</view>
+</view>

@@ -1,0 +1,29 @@
+/* components/stat-card/stat-card.wxss - 统计卡片样式 */
+.stat-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.sc-value {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.sc-value.accent {
+  color: #E82127;
+}
+
+.sc-label {
+  font-size: 24rpx;
+  color: #8A8A8A;
+  margin-top: 8rpx;
+}
+
+.sc-sub {
+  font-size: 20rpx;
+  color: #C4C4C4;
+  margin-top: 4rpx;
+}

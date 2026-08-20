@@ -1,0 +1,40 @@
+# tesla-api 独立 compose（与 teslamate 共享同一 PG 网络）
+# 部署：cd /data/app/tesla-api && docker compose up -d
+# 注意：PG 容器名 = teslamate-database-1（与 teslamate compose 同网络）
+
+services:
+  tesla-api:
+    build: .
+    image: tesla-api:latest
+    container_name: tesla-api
+    restart: always
+    environment:
+      - TESLA_API_TOKEN=${TESLA_API_TOKEN}
+      - TESLA_PASSPHRASE=${TESLA_PASSPHRASE}
+      - WX_APPID=${WX_APPID}
+      - WX_SECRET=${WX_SECRET}
+      # tesla_app 库（读写）
+      - APP_DB_HOST=teslamate-database-1
+      - APP_DB_PORT=5432
+      - APP_DB_NAME=tesla_app
+      - APP_DB_USER=${APP_DB_USER}
+      - APP_DB_PASS=${APP_DB_PASS}
+      # teslamate 库（只读）
+      - TM_DB_HOST=teslamate-database-1
+      - TM_DB_PORT=5432
+      - TM_DB_NAME=teslamate
+      - TM_DB_USER=${TM_DB_USER}
+      - TM_DB_PASS=${TM_DB_PASS}
+    ports:
+      - "127.0.0.1:8081:8081"   # 仅本机回环，由 nginx 反代对外
+    networks:
+      - teslamate_default
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:8081/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+networks:
+  teslamate_default:
+    external: true

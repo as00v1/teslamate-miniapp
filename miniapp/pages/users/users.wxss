@@ -1,0 +1,152 @@
+/* pages/users/users.wxss - 用户管理页样式 */
+.page {
+  padding-bottom: 40rpx;
+}
+
+/* 当前用户卡片 */
+.me-card {
+  display: flex;
+  align-items: center;
+  background: #1A1A1A;
+  border-radius: 20rpx;
+  margin: 24rpx;
+  padding: 32rpx;
+}
+
+.me-avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: #E82127;
+  color: #FFFFFF;
+  font-size: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+}
+
+.me-info {
+  flex: 1;
+}
+
+.me-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.me-id {
+  font-size: 22rpx;
+  color: #B8B8B8;
+  margin-top: 6rpx;
+}
+
+.me-badge {
+  font-size: 22rpx;
+  color: #1A1A1A;
+  background: #2A2A2A;
+  padding: 6rpx 20rpx;
+  border-radius: 24rpx;
+}
+
+/* 成员列表 */
+.member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F2F2F2;
+}
+
+.member-item:last-child {
+  border-bottom: none;
+}
+
+.member-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.member-name-row {
+  display: flex;
+  align-items: center;
+}
+
+.member-name {
+  font-size: 28rpx;
+  color: #1A1A1A;
+  font-weight: 500;
+}
+
+.member-role {
+  font-size: 20rpx;
+  color: #6B6B6B;
+  background: #F0F0F0;
+  padding: 2rpx 12rpx;
+  border-radius: 16rpx;
+  margin-left: 12rpx;
+}
+
+.member-id {
+  font-size: 20rpx;
+  color: #B4B4B4;
+  margin-top: 6rpx;
+  max-width: 420rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member-time {
+  font-size: 20rpx;
+  color: #C4C4C4;
+  margin-top: 4rpx;
+}
+
+.member-right {
+  flex-shrink: 0;
+  margin-left: 20rpx;
+}
+
+.member-self {
+  font-size: 22rpx;
+  color: #8A8A8A;
+  background: #F2F2F2;
+  padding: 6rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+.member-remove {
+  font-size: 22rpx;
+  color: #A32D2D;
+  background: #FCEBEB;
+  padding: 6rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+/* 当前账号操作 */
+.action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+}
+
+.action-label {
+  font-size: 28rpx;
+  color: #A32D2D;
+}
+
+.action-arrow {
+  font-size: 36rpx;
+  color: #C4C4C4;
+}
+
+.action-tip {
+  font-size: 20rpx;
+  color: #B4B4B4;
+  padding-bottom: 8rpx;
+}

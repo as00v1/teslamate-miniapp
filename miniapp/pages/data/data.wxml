@@ -1,0 +1,176 @@
+<!-- pages/data/data.wxml - 数据页：4 tab 统计图表（无明细） -->
+<view class="page">
+  <!-- 未绑定占位 -->
+  <bind-guard wx:if="{{!bound}}" />
+
+  <block wx:else>
+  <!-- 页签行 + 右上角时间范围切换 -->
+  <view class="tabs-row">
+    <view class="tabs">
+      <view class="tab-item {{activeTab === 'overview' ? 'active' : ''}}" bindtap="switchTab" data-tab="overview">总览</view>
+      <view class="tab-item {{activeTab === 'drives' ? 'active' : ''}}" bindtap="switchTab" data-tab="drives">行驶</view>
+      <view class="tab-item {{activeTab === 'charges' ? 'active' : ''}}" bindtap="switchTab" data-tab="charges">充电</view>
+      <view class="tab-item {{activeTab === 'cost' ? 'active' : ''}}" bindtap="switchTab" data-tab="cost">花费</view>
+    </view>
+    <view class="range-btn" bindtap="switchRange">
+      <text class="range-text">{{rangeLabel}}</text>
+      <text class="range-arrow">▾</text>
+    </view>
+  </view>
+
+  <!-- ═══════ Tab1 总览 ═══════ -->
+  <block wx:if="{{activeTab === 'overview'}}">
+    <view class="card">
+      <view class="card-title">核心指标</view>
+      <view class="metric-grid">
+        <view class="metric-item" wx:for="{{core}}" wx:key="label">
+          <view class="metric-value {{item.accent ? 'accent' : ''}}">{{item.value}}</view>
+          <view class="metric-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">{{rangeLabel}}里程 (km)</view>
+      <view class="trend-chart">
+        <view class="trend-bar" wx:for="{{trendBars}}" wx:key="label">
+          <view class="trend-col">
+            <view class="trend-value">{{item.valueText}}</view>
+            <view class="trend-fill" style="height: {{item.heightPct}}%"></view>
+          </view>
+          <view class="trend-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">充电构成</view>
+      <view class="donut-row">
+        <view class="donut" style="background: conic-gradient(#E82127 {{chargeDonut.homePct}}%, #F09595 0 {{chargeDonut.homePct + chargeDonut.fastPct}}%, #EEEEEE 0);">
+          <view class="donut-inner">
+            <view class="donut-main">家充 {{chargeDonut.homePct}}%</view>
+            <view class="donut-sub">超充 {{chargeDonut.fastPct}}%</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ═══════ Tab2 行驶 ═══════ -->
+  <block wx:if="{{activeTab === 'drives'}}">
+    <view class="card">
+      <view class="card-title">行驶统计</view>
+      <view class="metric-grid">
+        <view class="metric-item" wx:for="{{driveStats}}" wx:key="label">
+          <view class="metric-value {{item.accent ? 'accent' : ''}}">{{item.value}}</view>
+          <view class="metric-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">每周各天行驶里程 (km)</view>
+      <view class="trend-chart">
+        <view class="trend-bar" wx:for="{{weeklyBars}}" wx:key="label">
+          <view class="trend-col">
+            <view class="trend-value">{{item.valueText}}</view>
+            <view class="trend-fill green" style="height: {{item.heightPct}}%"></view>
+          </view>
+          <view class="trend-label">周{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">出发时段分布</view>
+      <view class="trend-chart">
+        <view class="trend-bar" wx:for="{{hourlyBars}}" wx:key="label">
+          <view class="trend-col">
+            <view class="trend-value">{{item.valueText}}</view>
+            <view class="trend-fill amber" style="height: {{item.heightPct}}%"></view>
+          </view>
+          <view class="trend-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ═══════ Tab3 充电 ═══════ -->
+  <block wx:if="{{activeTab === 'charges'}}">
+    <view class="card">
+      <view class="card-title">充电统计</view>
+      <view class="metric-grid">
+        <view class="metric-item" wx:for="{{chargeStats}}" wx:key="label">
+          <view class="metric-value {{item.accent ? 'accent' : ''}}">{{item.value}}</view>
+          <view class="metric-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">充电地点分布</view>
+      <view class="trend-chart">
+        <view class="trend-bar" wx:for="{{locationBars}}" wx:key="label">
+          <view class="trend-col">
+            <view class="trend-value">{{item.valueText}}</view>
+            <view class="trend-fill purple" style="height: {{item.heightPct}}%"></view>
+          </view>
+          <view class="trend-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card" wx:if="{{powerBars.length}}">
+      <view class="card-title">超充功率分布 (kW)</view>
+      <view class="trend-chart">
+        <view class="trend-bar" wx:for="{{powerBars}}" wx:key="label">
+          <view class="trend-col">
+            <view class="trend-value">{{item.valueText}}</view>
+            <view class="trend-fill" style="height: {{item.heightPct}}%"></view>
+          </view>
+          <view class="trend-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">预估满电续航趋势 (km)</view>
+      <view class="trend-chart">
+        <view class="trend-bar" wx:for="{{rangeBars}}" wx:key="label">
+          <view class="trend-col">
+            <view class="trend-value">{{item.valueText}}</view>
+            <view class="trend-fill teal" style="height: {{item.heightPct}}%"></view>
+          </view>
+          <view class="trend-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ═══════ Tab4 花费 ═══════ -->
+  <block wx:if="{{activeTab === 'cost'}}">
+    <view class="card">
+      <view class="card-title">成本分析</view>
+      <view class="metric-grid">
+        <view class="metric-item" wx:for="{{costStats}}" wx:key="label">
+          <view class="metric-value {{item.accent ? 'accent' : ''}}">{{item.value}}</view>
+          <view class="metric-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">每月花费 (元)</view>
+      <view class="trend-chart">
+        <view class="trend-bar" wx:for="{{monthlyBars}}" wx:key="label">
+          <view class="trend-col">
+            <view class="trend-value">{{item.valueText}}</view>
+            <view class="trend-fill" style="height: {{item.heightPct}}%"></view>
+          </view>
+          <view class="trend-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+  </block>
+</view>

@@ -1,0 +1,186 @@
+/* pages/mine/mine.wxss - 我的页面样式 */
+.page {
+  padding-bottom: 40rpx;
+}
+
+.profile-card {
+  background: #1A1A1A;
+  color: #FFFFFF;
+  border-radius: 20rpx;
+  margin: 24rpx;
+  padding: 36rpx 32rpx;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: #E82127;
+  color: #FFFFFF;
+  font-size: 48rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+}
+
+.profile-name {
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.profile-sub {
+  font-size: 24rpx;
+  color: #B8B8B8;
+  margin-top: 6rpx;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #F2F2F2;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: #8A8A8A;
+}
+
+.info-value {
+  font-size: 26rpx;
+  color: #1A1A1A;
+}
+
+.switch-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F2F2F2;
+}
+
+.switch-row:last-child {
+  border-bottom: none;
+}
+
+.switch-label-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.switch-label {
+  font-size: 26rpx;
+  color: #1A1A1A;
+}
+
+.switch-desc {
+  font-size: 20rpx;
+  color: #B4B4B4;
+  margin-top: 4rpx;
+}
+
+/* 绑定 */
+.bound-ok {
+  color: #0F6E56;
+}
+
+.bound-no {
+  color: #A32D2D;
+}
+
+
+
+.bind-btn {
+  background: #E82127;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+  border: none;
+}
+
+
+
+/* 初始绑定码入口（低调小字） */
+
+
+/* 车主管理区 */
+
+
+.owner-divider {
+  height: 1rpx;
+  background: #F2F2F2;
+  margin: 20rpx 0;
+}
+
+
+
+.owner-tip {
+  font-size: 20rpx;
+  color: #B4B4B4;
+  margin: 8rpx 0 16rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.switch-tip {
+  font-size: 22rpx;
+  color: #B4B4B4;
+  padding-top: 8rpx;
+}
+
+/* 用户管理入口 */
+.manage-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0 8rpx;
+}
+
+.manage-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.manage-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1A1A1A;
+}
+
+.manage-sub {
+  font-size: 20rpx;
+  color: #B4B4B4;
+  margin-top: 6rpx;
+}
+
+.manage-arrow {
+  font-size: 40rpx;
+  color: #C4C4C4;
+  line-height: 1;
+}

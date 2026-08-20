@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/drives/drives",
+    "pages/data/data",
+    "pages/mine/mine",
+    "pages/bind/bind",
+    "pages/users/users"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1A1A1A",
+    "navigationBarTitleText": "我的特斯拉",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F7F7F7"
+  },
+  "tabBar": {
+    "color": "#8A8A8A",
+    "selectedColor": "#E82127",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "车辆",
+        "iconPath": "assets/tab/car.png",
+        "selectedIconPath": "assets/tab/car-active.png"
+      },
+      {
+        "pagePath": "pages/drives/drives",
+        "text": "行程",
+        "iconPath": "assets/tab/drive.png",
+        "selectedIconPath": "assets/tab/drive-active.png"
+      },
+      {
+        "pagePath": "pages/data/data",
+        "text": "数据",
+        "iconPath": "assets/tab/data.png",
+        "selectedIconPath": "assets/tab/data-active.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "assets/tab/mine.png",
+        "selectedIconPath": "assets/tab/mine-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,6 @@
+<!-- components/stat-card/stat-card.wxml - 统计卡片组件 -->
+<view class="stat-card">
+  <view class="sc-value {{accent ? 'accent' : ''}}">{{value}}</view>
+  <view class="sc-label">{{label}}</view>
+  <view class="sc-sub" wx:if="{{sub}}">{{sub}}</view>
+</view>

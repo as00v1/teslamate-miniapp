@@ -1,0 +1,9 @@
+<!-- components/bind-guard/bind-guard.wxml - 未绑定占位 -->
+<view class="guard">
+  <view class="guard-icon">
+    <view class="guard-lock"></view>
+  </view>
+  <view class="guard-title">尚未绑定车辆</view>
+  <view class="guard-desc">绑定 TeslaMate 后即可查看车辆状态、行程与数据</view>
+  <button class="guard-btn" bindtap="goBind">立即绑定</button>
+</view>

@@ -1,0 +1,199 @@
+/* pages/data/data.wxss - 数据页样式（参考 TeslaMate 首页） */
+.page {
+  padding-bottom: 40rpx;
+}
+
+/* 页签行 + 右上角时间范围切换 */
+.tabs-row {
+  display: flex;
+  align-items: center;
+  margin: 20rpx 24rpx 0;
+}
+
+/* 4 tab 页签 */
+.tabs {
+  flex: 1;
+  display: flex;
+  background: #EEEEEE;
+  border-radius: 12rpx;
+  padding: 6rpx;
+}
+
+/* 时间范围切换按钮（右上角） */
+.range-btn {
+  display: flex;
+  align-items: center;
+  margin-left: 16rpx;
+  padding: 10rpx 20rpx;
+  background: #FFFFFF;
+  border: 2rpx solid #E5E5E5;
+  border-radius: 30rpx;
+  flex-shrink: 0;
+}
+
+.range-text {
+  font-size: 24rpx;
+  color: #1A1A1A;
+  font-weight: 500;
+}
+
+.range-arrow {
+  font-size: 20rpx;
+  color: #8A8A8A;
+  margin-left: 6rpx;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 14rpx 0;
+  font-size: 28rpx;
+  color: #8A8A8A;
+  border-radius: 10rpx;
+  transition: all 0.2s ease;
+}
+
+.tab-item.active {
+  background: #FFFFFF;
+  color: #E82127;
+  font-weight: 600;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+}
+
+/* 指标网格 3 列 */
+.metric-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.metric-item {
+  box-sizing: border-box;
+  width: calc(33.333% - 12rpx);
+  background: #F7F7F7;
+  border-radius: 12rpx;
+  padding: 20rpx 12rpx;
+  margin-bottom: 16rpx;
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+  word-break: break-all;
+  line-height: 1.3;
+}
+
+.metric-label {
+  font-size: 20rpx;
+  color: #8A8A8A;
+  margin-top: 6rpx;
+}
+
+/* 趋势柱状图 */
+.trend-chart {
+  display: flex;
+  align-items: flex-end;
+  height: 280rpx;
+  padding-top: 40rpx;
+}
+
+.trend-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.trend-col {
+  position: relative;
+  flex: 1;
+  width: 20rpx;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* 柱顶数值 */
+.trend-value {
+  position: absolute;
+  top: -26rpx;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 16rpx;
+  color: #8A8A8A;
+  white-space: nowrap;
+  transform: scale(0.9);
+}
+
+.trend-fill {
+  width: 100%;
+  background: #E82127;
+  border-radius: 6rpx 6rpx 0 0;
+  min-height: 4rpx;
+}
+
+.trend-fill.green {
+  background: #639922;
+}
+
+.trend-fill.amber {
+  background: #BA7517;
+}
+
+.trend-fill.purple {
+  background: #534AB7;
+}
+
+.trend-fill.teal {
+  background: #0F6E56;
+}
+
+.trend-label {
+  font-size: 16rpx;
+  color: #B4B4B4;
+  margin-top: 8rpx;
+  transform: rotate(-45deg);
+  white-space: nowrap;
+}
+
+/* 环形图 */
+.donut-row {
+  display: flex;
+  justify-content: center;
+  padding: 10rpx 0;
+}
+
+.donut {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut-inner {
+  width: 168rpx;
+  height: 168rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut-main {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.donut-sub {
+  font-size: 22rpx;
+  color: #8A8A8A;
+  margin-top: 6rpx;
+}

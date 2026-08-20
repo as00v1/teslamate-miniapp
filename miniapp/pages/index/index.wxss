@@ -1,0 +1,199 @@
+/* pages/index/index.wxss - 首页：车辆状态 + 控制 */
+.page {
+  padding-bottom: 40rpx;
+}
+
+/* 车辆卡片 */
+.car-card {
+  background: #1A1A1A;
+  color: #FFFFFF;
+  border-radius: 20rpx;
+  margin: 24rpx;
+  padding: 36rpx 32rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.car-nickname {
+  font-size: 38rpx;
+  font-weight: 600;
+}
+
+.car-name {
+  font-size: 24rpx;
+  color: #B8B8B8;
+  margin-top: 8rpx;
+}
+
+.car-logo {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: #E82127;
+  color: #FFFFFF;
+  font-size: 40rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 状态大卡 */
+.status-card {
+  display: flex;
+  align-items: center;
+}
+
+.status-left {
+  margin-right: 32rpx;
+}
+
+.battery-ring {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* conic-gradient 由内联 style 控制百分比 */
+}
+
+.battery-inner {
+  width: 132rpx;
+  height: 132rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.battery-pct {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.battery-sub {
+  font-size: 20rpx;
+  color: #8A8A8A;
+}
+
+.status-right {
+  flex: 1;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10rpx 0;
+}
+
+.s-label {
+  font-size: 26rpx;
+  color: #8A8A8A;
+}
+
+.s-value {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #1A1A1A;
+}
+
+/* 辅助状态条 */
+.sub-status {
+  display: flex;
+}
+
+.sub-item {
+  flex: 1;
+  text-align: center;
+}
+
+.sub-value {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1A1A1A;
+}
+
+.sub-label {
+  font-size: 20rpx;
+  color: #B4B4B4;
+  margin-top: 4rpx;
+}
+
+/* 实时状态待接入提示 */
+.pending-tip {
+  padding: 12rpx 8rpx;
+}
+
+.pending-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.pending-sub {
+  font-size: 24rpx;
+  color: #8A8A8A;
+  margin-top: 10rpx;
+  line-height: 1.6;
+}
+
+/* 控制按钮 */
+.ctrl-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ctrl-btn {
+  box-sizing: border-box;
+  width: calc(33.333% - 14rpx);
+  margin-right: 21rpx;
+  margin-bottom: 20rpx;
+  background: #F7F7F7;
+  border-radius: 16rpx;
+  padding: 24rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2rpx solid transparent;
+  transition: all 0.15s ease;
+}
+
+.ctrl-btn:nth-child(3n) {
+  margin-right: 0;
+}
+
+.ctrl-btn.on {
+  border-color: #E82127;
+  background: #FCEBEB;
+}
+
+.ctrl-hover {
+  background: #EFEFEF;
+  transform: scale(0.96);
+}
+
+.ctrl-icon {
+  width: 56rpx;
+  height: 56rpx;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.ctrl-text {
+  font-size: 24rpx;
+  color: #1A1A1A;
+  margin-top: 10rpx;
+}
+
+.footer-note {
+  text-align: center;
+  font-size: 22rpx;
+  color: #B4B4B4;
+  margin-top: 20rpx;
+}
