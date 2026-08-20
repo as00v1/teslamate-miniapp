@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "我的",
-  "usingComponents": {}
+  "usingComponents": {
+    "bind-banner": "../../components/bind-banner/bind-banner"
+  }
 }

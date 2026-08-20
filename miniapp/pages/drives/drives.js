@@ -34,17 +34,81 @@ Page({
 
   checkBound() {
     const bound = auth.isBound();
-    this.setData({ bound });
-    if (bound && this.data.list.length === 0) {
-      this.refresh();
+    if (bound) {
+      this.setData({ bound });
+      if (this.data.list.length === 0 || this.data.stats.totalDrives === 0) {
+        this.refresh();
+      }
+    } else {
+      // 未绑定：展示模块骨架（数据 ?），tabs 可切换浏览结构，交互跳绑定
+      this.setData({
+        bound: false,
+        stats: { totalDrives: '?', totalDistanceText: '?', totalEnergyText: '?', avgEfficiencyText: '?' },
+        list: this.skeletonDrives(),
+        chargeList: this.skeletonCharges(),
+        hasMore: false,
+        loading: false
+      });
     }
     // 清缓存后从后端恢复绑定状态（openid 不变，后端仍有绑定记录）
     auth.syncBindState().then((b) => {
       if (b !== this.data.bound) {
         this.setData({ bound: b });
-        if (b && this.data.list.length === 0) this.refresh();
+        if (b && (this.data.list.length === 0 || this.data.stats.totalDrives === 0)) this.refresh();
       }
     });
+  },
+
+  // 未绑定骨架行（数据 ?，布局完整）
+  skeletonDrives() {
+    return [1, 2, 3].map(i => ({
+      id: 'sk' + i,
+      dateText: '--',
+      distanceText: '?',
+      durationText: '?',
+      speedText: '?',
+      energyText: '?',
+      costText: '?',
+      routeText: '?'
+    }));
+  },
+
+  skeletonCharges() {
+    return [1, 2, 3].map(i => ({
+      id: 'skc' + i,
+      dateText: '--',
+      costText: '?',
+      energyText: '?',
+      levelText: '?',
+      tagText: '?',
+      footText: '?'
+    }));
+  },
+
+  goBind() {
+    wx.navigateTo({ url: '/pages/bind/bind' });
+  },
+
+  // 点击行程项 → 详情页（未绑定跳绑定）
+  goDetail(e) {
+    if (!this.data.bound) {
+      this.goBind();
+      return;
+    }
+    const id = e.currentTarget.dataset.id;
+    if (!id || String(id).startsWith('sk')) return;
+    wx.navigateTo({ url: '/pages/drive-detail/drive-detail?id=' + id });
+  },
+
+  // 点击充电项 → 充电详情页（未绑定跳绑定）
+  goChargeDetail(e) {
+    if (!this.data.bound) {
+      this.goBind();
+      return;
+    }
+    const id = e.currentTarget.dataset.id;
+    if (!id || String(id).startsWith('skc')) return;
+    wx.navigateTo({ url: '/pages/charge-detail/charge-detail?id=' + id });
   },
 
   onPullDownRefresh() {
@@ -64,8 +128,8 @@ Page({
     const tab = e.currentTarget.dataset.tab;
     if (tab === this.data.activeTab) return;
     this.setData({ activeTab: tab });
-    // 懒加载充电列表
-    if (tab === 'charges' && this.data.chargeList.length === 0) {
+    // 懒加载充电列表（未绑定不请求）
+    if (tab === 'charges' && this.data.chargeList.length === 0 && this.data.bound) {
       this.loadCharges();
     }
   },
@@ -105,12 +169,12 @@ Page({
   refresh() {
     this.setData({ loading: true, offset: 0, list: [], chargeList: [] });
     return Promise.all([
-      request('/summary?range=all'),
+      request('/drives/stats'),
       request(`/drives?offset=0&limit=${PAGE_SIZE}&range=all`)
-    ]).then(([summary, res]) => {
+    ]).then(([stats, res]) => {
       const list = (res.list || []).map(d => this.decorateDrive(d));
-      const avgEff = summary.total_distance > 0
-        ? (summary.total_energy / summary.total_distance * 100).toFixed(1)
+      const avgEff = stats.total_distance > 0
+        ? (stats.total_energy / stats.total_distance * 100).toFixed(1)
         : '-';
       this.setData({
         list,
@@ -118,9 +182,9 @@ Page({
         hasMore: list.length >= PAGE_SIZE,
         loading: false,
         stats: {
-          totalDrives: summary.total_drives,
-          totalDistanceText: fmt.km(summary.total_distance),
-          totalEnergyText: fmt.kwh(summary.total_energy),
+          totalDrives: stats.total_drives,
+          totalDistanceText: fmt.km(stats.total_distance),
+          totalEnergyText: fmt.kwh(stats.total_energy),
           avgEfficiencyText: avgEff + ' kWh/100km'
         }
       });

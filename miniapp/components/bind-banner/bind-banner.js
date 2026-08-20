@@ -1,4 +1,4 @@
-// components/bind-guard/bind-guard.js - 未绑定占位组件
+// components/bind-banner/bind-banner.js - 未绑定顶部引导横幅（4 页统一）
 Component({
   methods: {
     goBind() {

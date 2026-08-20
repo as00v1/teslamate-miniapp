@@ -5,7 +5,9 @@
     "pages/data/data",
     "pages/mine/mine",
     "pages/bind/bind",
-    "pages/users/users"
+    "pages/users/users",
+    "pages/drive-detail/drive-detail",
+    "pages/charge-detail/charge-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

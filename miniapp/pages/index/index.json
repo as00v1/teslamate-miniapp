@@ -1,8 +1,6 @@
 {
   "navigationBarTitleText": "车辆",
-  "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark",
   "usingComponents": {
-    "bind-guard": "../../components/bind-guard/bind-guard"
+    "bind-banner": "../../components/bind-banner/bind-banner"
   }
 }

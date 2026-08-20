@@ -1,9 +1,8 @@
 {
   "navigationBarTitleText": "行程",
   "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark",
   "usingComponents": {
-    "empty-state": "../../components/empty-state/empty-state",
-    "bind-guard": "../../components/bind-guard/bind-guard"
+    "bind-banner": "../../components/bind-banner/bind-banner",
+    "empty-state": "../../components/empty-state/empty-state"
   }
 }

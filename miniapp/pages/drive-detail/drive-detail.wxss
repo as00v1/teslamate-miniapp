@@ -1,0 +1,116 @@
+/* pages/drive-detail/drive-detail.wxss - 行程详情 */
+.page {
+  padding-bottom: 40rpx;
+}
+
+/* 头部 */
+.head-card {
+  margin: 20rpx 24rpx 0;
+  padding: 40rpx 32rpx;
+  background: #1A1A1A;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.head-date {
+  font-size: 26rpx;
+  color: #B4B4B4;
+}
+
+.head-time {
+  font-size: 22rpx;
+  color: #8A8A8A;
+  margin-top: 6rpx;
+}
+
+.head-distance {
+  font-size: 72rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-top: 16rpx;
+}
+
+.head-route {
+  font-size: 26rpx;
+  color: #E82127;
+  margin-top: 12rpx;
+}
+
+/* 指标网格 */
+.metric-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.metric-item {
+  box-sizing: border-box;
+  width: calc(33.333% - 12rpx);
+  background: #F7F7F7;
+  border-radius: 14rpx;
+  padding: 22rpx 16rpx;
+  margin-bottom: 18rpx;
+  text-align: center;
+}
+
+.m-value {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.m-label {
+  font-size: 20rpx;
+  color: #8A8A8A;
+  margin-top: 6rpx;
+}
+
+/* 信息行 */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: #8A8A8A;
+}
+
+.info-value {
+  font-size: 26rpx;
+  color: #1A1A1A;
+  font-weight: 500;
+}
+
+/* 加载/错误 */
+.loading-tip,
+.error-tip {
+  padding: 200rpx 60rpx;
+  text-align: center;
+}
+
+.loading-tip {
+  font-size: 28rpx;
+  color: #B4B4B4;
+}
+
+.error-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.error-sub {
+  font-size: 24rpx;
+  color: #8A8A8A;
+  margin-top: 12rpx;
+}

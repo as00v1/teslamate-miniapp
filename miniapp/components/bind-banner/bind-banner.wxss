@@ -1,0 +1,43 @@
+/* components/bind-banner/bind-banner.wxss - 未绑定顶部引导横幅 */
+.banner {
+  display: flex;
+  align-items: center;
+  margin: 20rpx 24rpx 0;
+  padding: 24rpx 28rpx;
+  background: #FFF7F7;
+  border: 2rpx solid #F5D4D4;
+  border-radius: 16rpx;
+}
+
+.banner-hover {
+  opacity: 0.75;
+}
+
+.banner-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.banner-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.banner-sub {
+  font-size: 22rpx;
+  color: #8A8A8A;
+  margin-top: 4rpx;
+}
+
+.banner-arrow {
+  font-size: 44rpx;
+  color: #E82127;
+  margin-left: 12rpx;
+}

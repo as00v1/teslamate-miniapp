@@ -1,0 +1,9 @@
+<!-- components/bind-banner/bind-banner.wxml - 未绑定顶部引导横幅（4 页统一） -->
+<view class="banner" hover-class="banner-hover" bindtap="goBind">
+  <view class="banner-icon">🔒</view>
+  <view class="banner-text">
+    <view class="banner-title">尚未绑定车辆</view>
+    <view class="banner-sub">点击口令登录，解锁真实数据</view>
+  </view>
+  <view class="banner-arrow">›</view>
+</view>

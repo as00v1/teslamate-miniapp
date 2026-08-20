@@ -3,20 +3,25 @@ const { request } = require('../../utils/request');
 const fmt = require('../../utils/format');
 const auth = require('../../utils/auth');
 
+// 未绑定骨架：数据 ?，布局完整展示
+function skeletonVehicle() {
+  return {
+    name: '?',
+    nickname: '未绑定',
+    capacityText: '?',
+    efficiencyText: '?',
+    odoText: '?'
+  };
+}
+
 Page({
   data: {
     bound: false,
     isOwner: false,
     openid: '',
     members: [],
-    vehicle: {
-      name: 'Model Y',
-      nickname: '我的爱车',
-      capacityText: '60 kWh',
-      efficiencyText: '0.156 kWh/km',
-      odoText: '48,213 km'
-    },
-    lastUpdateText: '加载中...',
+    vehicle: skeletonVehicle(),
+    lastUpdateText: '—',
     pushEnabled: false,
     statusEnabled: false,
     lockWarnEnabled: true
@@ -34,12 +39,17 @@ Page({
   },
 
   checkBound() {
+    const bound = auth.isBound();
     this.setData({
-      bound: auth.isBound(),
+      bound,
       isOwner: auth.isOwner(),
       openid: auth.getOpenid(),
       members: auth.getMembers()
     });
+    if (!bound) {
+      // 未绑定：布局完整展示，数据 ? 骨架
+      this.setData({ vehicle: skeletonVehicle(), lastUpdateText: '—' });
+    }
     // 清缓存后从后端恢复绑定状态（openid 不变，后端仍有绑定记录）
     auth.syncBindState().then((b) => {
       if (b !== this.data.bound) {
@@ -83,10 +93,28 @@ Page({
   },
 
   goUsers() {
+    if (!this.data.bound) {
+      this.goBind();
+      return;
+    }
     wx.navigateTo({ url: '/pages/users/users' });
   },
 
+  // 未绑定点击设置区/信息卡 → 跳绑定
+  onSettingTap() {
+    if (!this.data.bound) {
+      this.goBind();
+    }
+  },
+
+  onCardTap() {
+    if (!this.data.bound) {
+      this.goBind();
+    }
+  },
+
   onPushChange(e) {
+    if (!this.data.bound) { this.goBind(); return; }
     this.setData({ pushEnabled: e.detail.value });
     if (e.detail.value) {
       wx.showToast({ title: '行程推送·二期开放', icon: 'none' });
@@ -94,6 +122,7 @@ Page({
   },
 
   onStatusChange(e) {
+    if (!this.data.bound) { this.goBind(); return; }
     this.setData({ statusEnabled: e.detail.value });
     if (e.detail.value) {
       wx.showToast({ title: '实时状态·二期开放', icon: 'none' });
@@ -101,6 +130,7 @@ Page({
   },
 
   onLockWarnChange(e) {
+    if (!this.data.bound) { this.goBind(); return; }
     this.setData({ lockWarnEnabled: e.detail.value });
   }
 });

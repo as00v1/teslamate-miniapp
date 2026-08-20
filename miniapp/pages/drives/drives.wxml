@@ -1,9 +1,8 @@
 <!-- pages/drives/drives.wxml - 行程页：旅程/充电 明细 tab -->
 <view class="page">
-  <!-- 未绑定占位 -->
-  <bind-guard wx:if="{{!bound}}" />
+  <!-- 未绑定引导横幅（布局始终展示，数据为 ? 骨架） -->
+  <bind-banner wx:if="{{!bound}}" />
 
-  <block wx:else>
   <!-- 统计卡 -->
   <view class="stats-grid">
     <view class="stat-item">
@@ -34,7 +33,7 @@
   <view class="card" wx:if="{{activeTab === 'drives'}}">
     <view class="card-title">行程明细</view>
     <view class="drive-list">
-      <view class="drive-item" hover-class="item-hover" wx:for="{{list}}" wx:key="id">
+      <view class="drive-item" hover-class="item-hover" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
         <view class="drive-top">
           <view class="drive-date">{{item.dateText}}</view>
           <view class="drive-distance">{{item.distanceText}}</view>
@@ -70,7 +69,7 @@
   <view class="card" wx:else>
     <view class="card-title">充电明细</view>
     <view class="charge-list">
-      <view class="charge-item" hover-class="item-hover" wx:for="{{chargeList}}" wx:key="id">
+      <view class="charge-item" hover-class="item-hover" wx:for="{{chargeList}}" wx:key="id" bindtap="goChargeDetail" data-id="{{item.id}}">
         <view class="charge-top">
           <view class="charge-date">{{item.dateText}}</view>
           <view class="charge-tag {{item.tagClass}}">{{item.tagText}}</view>
@@ -97,5 +96,4 @@
     </view>
     <empty-state wx:if="{{!loading && chargeList.length === 0}}" text="暂无充电记录" />
   </view>
-  </block>
 </view>

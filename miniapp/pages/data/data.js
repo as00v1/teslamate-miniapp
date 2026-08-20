@@ -47,17 +47,50 @@ Page({
 
   checkBound() {
     const bound = auth.isBound();
-    this.setData({ bound });
-    if (bound && !this.data.core.length) {
-      this.refresh();
+    if (bound) {
+      this.setData({ bound });
+      if (!this.data.core.length || this.data.core[0].value === '?') {
+        this.refresh();
+      }
+    } else {
+      // 未绑定：展示模块骨架（指标 ?，图表矮柱占位），tabs/范围可切换，交互跳绑定
+      this.setData({
+        bound: false,
+        core: this.skeletonMetrics(['累计里程', '平均能耗', '累计充电量', '充电总费用', '每公里成本', '相比油车节省']),
+        driveStats: this.skeletonMetrics(['行驶次数', '平均单程', '最长单程', '平均时长', '最高时速', '平均外温']),
+        chargeStats: this.skeletonMetrics(['充电次数', '累计充电量', '平均单次充入', '平均充电功率', '超充占比', '预估满电续航']),
+        costStats: this.skeletonMetrics(['充电总费用', '月均花费', '每公里成本', '单位电价', '等效油费', '相比油车节省']),
+        trendBars: this.skeletonBars(15),
+        weeklyBars: this.skeletonBars(7),
+        hourlyBars: this.skeletonBars(12),
+        locationBars: this.skeletonBars(5),
+        powerBars: this.skeletonBars(5),
+        rangeBars: this.skeletonBars(12),
+        monthlyBars: this.skeletonBars(12),
+        chargeDonut: { homePct: 0, fastPct: 0 },
+        loading: false
+      });
     }
     // 清缓存后从后端恢复绑定状态（openid 不变，后端仍有绑定记录）
     auth.syncBindState().then((b) => {
       if (b !== this.data.bound) {
         this.setData({ bound: b });
-        if (b && !this.data.core.length) this.refresh();
+        if (b && (!this.data.core.length || this.data.core[0].value === '?')) this.refresh();
       }
     });
+  },
+
+  // 未绑定骨架：指标值 ? / 图表矮柱占位
+  skeletonMetrics(labels) {
+    return labels.map(label => ({ label, value: '?' }));
+  },
+
+  skeletonBars(n) {
+    return Array.from({ length: n }, (_, i) => ({ label: '—', valueText: '?', heightPct: 6 }));
+  },
+
+  goBind() {
+    wx.navigateTo({ url: '/pages/bind/bind' });
   },
 
   onPullDownRefresh() {
@@ -76,6 +109,10 @@ Page({
 
   // 右上角切换时间范围
   switchRange() {
+    if (!this.data.bound) {
+      this.goBind();
+      return;
+    }
     const itemList = RANGES.map(r => r.label);
     wx.showActionSheet({
       itemList,

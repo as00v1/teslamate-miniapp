@@ -3,6 +3,23 @@ const { request } = require('../../utils/request');
 const fmt = require('../../utils/format');
 const auth = require('../../utils/auth');
 
+// 未绑定骨架：数据用 ? 占位，布局完整展示
+function skeletonStatus() {
+  return { charge_level: 0, sentry_mode: false, locked: false };
+}
+function skeletonStatusText() {
+  return {
+    chargeLevel: '?',
+    rangeText: '? km',
+    insideTemp: '?°C',
+    outsideTemp: '?°C',
+    lockText: '?',
+    chargingText: '?',
+    locationText: '?',
+    updatedText: ''
+  };
+}
+
 Page({
   data: {
     bound: true,
@@ -11,16 +28,7 @@ Page({
       nickname: '我的爱车'
     },
     status: null,
-    statusText: {
-      chargeLevel: '-',
-      rangeText: '-',
-      insideTemp: '-',
-      outsideTemp: '-',
-      lockText: '—',
-      chargingText: '—',
-      locationText: '—',
-      updatedText: ''
-    },
+    statusText: skeletonStatusText(),
     // 真实模式：实时状态/控制接口未上线（P1/P3），显示降级提示
     statusUnavailable: false,
     controlling: false
@@ -36,9 +44,17 @@ Page({
 
   checkBound() {
     const bound = auth.isBound();
-    this.setData({ bound });
     if (bound) {
+      this.setData({ bound });
       this.loadStatus();
+    } else {
+      // 未绑定：展示模块骨架（数据 ?），点击任意交互区跳绑定
+      this.setData({
+        bound: false,
+        vehicle: { name: 'Tesla', nickname: '未绑定' },
+        status: skeletonStatus(),
+        statusText: skeletonStatusText()
+      });
     }
     // 清缓存后从后端恢复绑定状态（openid 不变，后端仍有绑定记录）
     auth.syncBindState().then((b) => {
@@ -55,6 +71,10 @@ Page({
       return;
     }
     this.loadStatus().then(() => wx.stopPullDownRefresh());
+  },
+
+  goBind() {
+    wx.navigateTo({ url: '/pages/bind/bind' });
   },
 
   loadStatus() {
@@ -105,8 +125,12 @@ Page({
     });
   },
 
-  // 控制指令（真实模式未上线，提示开发中）
+  // 控制指令（真实模式未上线，提示开发中；未绑定跳绑定页）
   runCmd(e) {
+    if (!this.data.bound) {
+      this.goBind();
+      return;
+    }
     const app = getApp();
     const label = e.currentTarget.dataset.label;
     if (this.data.controlling) return;

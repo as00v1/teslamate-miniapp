@@ -1,9 +1,8 @@
 <!-- pages/data/data.wxml - 数据页：4 tab 统计图表（无明细） -->
 <view class="page">
-  <!-- 未绑定占位 -->
-  <bind-guard wx:if="{{!bound}}" />
+  <!-- 未绑定引导横幅（布局始终展示，数据为 ? 骨架） -->
+  <bind-banner wx:if="{{!bound}}" />
 
-  <block wx:else>
   <!-- 页签行 + 右上角时间范围切换 -->
   <view class="tabs-row">
     <view class="tabs">
@@ -171,6 +170,5 @@
         </view>
       </view>
     </view>
-  </block>
   </block>
 </view>

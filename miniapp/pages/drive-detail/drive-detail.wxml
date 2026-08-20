@@ -1,0 +1,90 @@
+<!-- pages/drive-detail/drive-detail.wxml - 单条行程详情 -->
+<view class="page">
+  <!-- 加载中 -->
+  <view class="loading-tip" wx:if="{{loading}}">加载中...</view>
+
+  <!-- 错误/未找到 -->
+  <view class="error-tip" wx:elif="{{errorText}}">
+    <view class="error-title">无法加载行程</view>
+    <view class="error-sub">{{errorText}}</view>
+  </view>
+
+  <block wx:else>
+  <!-- 头部：日期 + 大里程 -->
+  <view class="head-card">
+    <view class="head-date">{{d.dateText}}</view>
+    <view class="head-time">{{d.timeRangeText}}</view>
+    <view class="head-distance">{{d.distanceText}}</view>
+    <view class="head-route">{{d.routeText}}</view>
+  </view>
+
+  <!-- 核心指标 -->
+  <view class="card">
+    <view class="card-title">本次行程</view>
+    <view class="metric-grid">
+      <view class="metric-item">
+        <view class="m-value">{{d.durationText}}</view>
+        <view class="m-label">时长</view>
+      </view>
+      <view class="metric-item">
+        <view class="m-value">{{d.speedMaxText}}</view>
+        <view class="m-label">最高时速</view>
+      </view>
+      <view class="metric-item">
+        <view class="m-value">{{d.speedAvgText}}</view>
+        <view class="m-label">平均时速</view>
+      </view>
+      <view class="metric-item">
+        <view class="m-value">{{d.energyText}}</view>
+        <view class="m-label">消耗电量</view>
+      </view>
+      <view class="metric-item">
+        <view class="m-value">{{d.costText}}</view>
+        <view class="m-label">花费</view>
+      </view>
+      <view class="metric-item">
+        <view class="m-value">{{d.powerMaxText}}</view>
+        <view class="m-label">最大功率</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 能耗与温度 -->
+  <view class="card">
+    <view class="card-title">能耗与温度</view>
+    <view class="info-row">
+      <text class="info-label">车内温度</text>
+      <text class="info-value">{{d.insideTempText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">车外温度</text>
+      <text class="info-value">{{d.outsideTempText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">续航变化</text>
+      <text class="info-value">{{d.rangeText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">里程表</text>
+      <text class="info-value">{{d.odoText}}</text>
+    </view>
+  </view>
+
+  <!-- 路况信息 -->
+  <view class="card">
+    <view class="card-title">路况信息</view>
+    <view class="info-row">
+      <text class="info-label">海拔爬升</text>
+      <text class="info-value">{{d.ascentText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">海拔下降</text>
+      <text class="info-value">{{d.descentText}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">回馈功率</text>
+      <text class="info-value">{{d.powerMinText}}</text>
+    </view>
+  </view>
+  </block>
+</view>

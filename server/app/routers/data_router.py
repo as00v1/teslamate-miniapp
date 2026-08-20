@@ -157,6 +157,31 @@ def summary(
     })
 
 
+@router.get("/drives/stats")
+def drives_stats(user=Depends(require_bound)):
+    """行程页轻量统计（只聚合 drives 表，不查 16 万条 charges，秒级返回）
+    能耗口径与 /summary 一致：理想续航差 × efficiency"""
+    with tm_pool.connection() as conn:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            SELECT COUNT(*),
+                   COALESCE(SUM(d.distance), 0),
+                   COALESCE(SUM((d.start_ideal_range_km - d.end_ideal_range_km) * c.efficiency), 0)
+            FROM drives d JOIN cars c ON c.id = d.car_id
+            WHERE d.car_id = %s AND d.end_date IS NOT NULL AND d.distance IS NOT NULL
+            """,
+            (CAR_ID,),
+        )
+        cnt, dist, energy = cur.fetchone()
+    return ok({
+        "total_drives": cnt,
+        "total_distance": round(float(dist or 0), 1),
+        "total_energy": round(float(energy or 0), 1),
+        "avg_efficiency": round(float(energy / dist * 100), 1) if dist else 0,
+    })
+
+
 @router.get("/drives")
 def drives(
     offset: int = Query(0, ge=0),
@@ -180,8 +205,8 @@ def drives(
                    d.distance, d.duration_min, d.speed_max, d.outside_temp_avg,
                    ROUND(CAST(d.distance * {EFFICIENCY} AS numeric), 1) AS energy_used,
                    ROUND(CAST(d.distance * {EFFICIENCY} * {ELECTRIC_PRICE} AS numeric), 2) AS cost,
-                   COALESCE(sa.name, sa.display_name, '') AS start_address,
-                   COALESCE(ea.name, ea.display_name, '') AS end_address
+                   COALESCE(NULLIF(sa.name, ''), SPLIT_PART(sa.display_name, ',', 1), '') AS start_address,
+                   COALESCE(NULLIF(ea.name, ''), SPLIT_PART(ea.display_name, ',', 1), '') AS end_address
             FROM drives d
             LEFT JOIN addresses sa ON sa.id = d.start_address_id
             LEFT JOIN addresses ea ON ea.id = d.end_address_id
@@ -364,3 +389,74 @@ def vehicle(user=Depends(require_bound)):
         "model": model or "",
         "efficiency": float(efficiency or 0),
     })
+
+
+@router.get("/drives/{drive_id}")
+def drive_detail(drive_id: int, user=Depends(require_bound)):
+    """单条行程详情（东八区时间输出，短地址）"""
+    with tm_pool.connection() as conn:
+        cur = conn.cursor()
+        cur.execute(
+            f"""
+            SELECT d.id,
+                   TO_CHAR(d.start_date AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai', 'YYYY-MM-DD HH24:MI') AS start_date,
+                   TO_CHAR(d.end_date AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai', 'YYYY-MM-DD HH24:MI') AS end_date,
+                   d.distance, d.duration_min, d.speed_max, d.power_max, d.power_min,
+                   d.outside_temp_avg, d.inside_temp_avg,
+                   d.start_ideal_range_km, d.end_ideal_range_km,
+                   d.start_km, d.end_km, d.ascent, d.descent,
+                   ROUND(CAST(d.distance * {EFFICIENCY} AS numeric), 1) AS energy_used,
+                   ROUND(CAST(d.distance * {EFFICIENCY} * {ELECTRIC_PRICE} AS numeric), 2) AS cost,
+                   COALESCE(NULLIF(sa.name, ''), SPLIT_PART(sa.display_name, ',', 1), '') AS start_address,
+                   COALESCE(NULLIF(ea.name, ''), SPLIT_PART(ea.display_name, ',', 1), '') AS end_address
+            FROM drives d
+            LEFT JOIN addresses sa ON sa.id = d.start_address_id
+            LEFT JOIN addresses ea ON ea.id = d.end_address_id
+            WHERE d.id = %s AND d.car_id = %s
+            """,
+            (drive_id, CAR_ID),
+        )
+        cols = [c[0] for c in cur.description]
+        row = cur.fetchone()
+    if not row:
+        return err(404, "行程不存在", status=404)
+    data = dict(zip(cols, row))
+    # 平均时速 = 里程 / 时长（小时）
+    dur = data.get("duration_min") or 0
+    data["speed_avg"] = round(data["distance"] / (dur / 60.0), 1) if dur else 0
+    return ok(data)
+
+
+@router.get("/charges/{charge_id}")
+def charge_detail(charge_id: int, user=Depends(require_bound)):
+    """单次充电详情（东八区时间输出，地点=geofence 优先）"""
+    with tm_pool.connection() as conn:
+        cur = conn.cursor()
+        cur.execute(
+            f"""
+            SELECT cp.id,
+                   TO_CHAR(cp.start_date AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai', 'YYYY-MM-DD HH24:MI') AS start_date,
+                   TO_CHAR(cp.end_date AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Shanghai', 'YYYY-MM-DD HH24:MI') AS end_date,
+                   cp.charge_energy_added, cp.charge_energy_used, cp.cost,
+                   cp.start_battery_level, cp.end_battery_level,
+                   cp.start_ideal_range_km, cp.end_ideal_range_km,
+                   cp.duration_min, cp.outside_temp_avg,
+                   COALESCE(NULLIF(g.name, ''), a.name, '') AS location,
+                   EXISTS(SELECT 1 FROM geofences gg WHERE gg.id = cp.geofence_id
+                          AND (gg.name ILIKE '%%超充%%' OR gg.name ILIKE '%%supercharger%%')) AS fast_charger
+            FROM charging_processes cp
+            LEFT JOIN geofences g ON g.id = cp.geofence_id
+            LEFT JOIN addresses a ON a.id = cp.address_id
+            WHERE cp.id = %s AND cp.car_id = %s
+            """,
+            (charge_id, CAR_ID),
+        )
+        cols = [c[0] for c in cur.description]
+        row = cur.fetchone()
+    if not row:
+        return err(404, "充电记录不存在", status=404)
+    data = dict(zip(cols, row))
+    # 平均功率 = 充入电量 / 时长（小时）
+    dur = data.get("duration_min") or 0
+    data["power_avg"] = round(float(data["charge_energy_added"] or 0) / (dur / 60.0), 1) if dur else 0
+    return ok(data)

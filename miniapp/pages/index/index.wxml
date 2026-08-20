@@ -1,9 +1,8 @@
 <!-- pages/index/index.wxml - 首页：车辆状态 + 控制 -->
 <view class="page">
-  <!-- 未绑定占位 -->
-  <bind-guard wx:if="{{!bound}}" />
+  <!-- 未绑定引导横幅（布局始终展示，数据为 ? 骨架） -->
+  <bind-banner wx:if="{{!bound}}" />
 
-  <block wx:else>
   <!-- 车辆信息头部 -->
   <view class="car-card">
     <view class="car-info">
@@ -43,8 +42,8 @@
     </view>
   </view>
 
-  <!-- 实时状态未接入提示（真实模式） -->
-  <view class="status-card card" wx:if="{{statusUnavailable && !status}}">
+  <!-- 实时状态未接入提示（已绑定 + 真实模式显示） -->
+  <view class="status-card card" wx:if="{{statusUnavailable && !status && bound}}">
     <view class="pending-tip">
       <view class="pending-title">实时状态待接入</view>
       <view class="pending-sub">当前展示车辆基础信息，电量/位置/温度等实时状态需接入特斯拉官方 API（P1 阶段）</view>
@@ -99,5 +98,4 @@
   </view>
 
   <view class="footer-note">{{statusText.updatedText}}</view>
-  </block>
 </view>
